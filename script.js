@@ -101,8 +101,8 @@
       form.reportValidity();
       return;
     }
-
-    const url = endpointInput.value.trim();
+    
+    const url = `${endpointInput.value.trim()}/predict`;
     if (!url) {
       showError("Enter the model endpoint before submitting.");
       return;
