@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loan File Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="desk">
+    <header class="masthead">
+      <p class="masthead__eyebrow">Underwriting desk</p>
+      <h1 class="masthead__title">Loan File Review</h1>
+      <p class="masthead__sub">Enter the applicant's details below. The file is reviewed against the credit-risk model and returned with a determination.</p>
+    </header>
+
+    <form id="review-form" class="file" novalidate>
+
+      <div class="file__endpoint">
+        <label for="endpoint">Model endpoint</label>
+        <input type="text" id="endpoint" name="endpoint" value="http://127.0.0.1:8000/predict" autocomplete="off" spellcheck="false" />
+      </div>
+
+      <section class="file__section" aria-labelledby="sec-1">
+        <h2 id="sec-1" class="file__heading"><span class="file__numeral">I.</span> Applicant</h2>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="person_age">Age</label>
+            <input type="number" id="person_age" name="person_age" min="18" max="100" step="1" required />
+          </div>
+
+          <div class="field">
+            <label for="person_income">Annual income</label>
+            <div class="field__prefixed">
+              <span class="field__prefix">$</span>
+              <input type="number" id="person_income" name="person_income" min="0" step="100" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="person_home_ownership">Home ownership</label>
+            <select id="person_home_ownership" name="person_home_ownership" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="RENT">Rent</option>
+              <option value="MORTGAGE">Mortgage</option>
+              <option value="OWN">Own</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="person_emp_length">Years employed</label>
+            <input type="number" id="person_emp_length" name="person_emp_length" min="0" max="70" step="0.5" required />
+          </div>
+        </div>
+      </section>
+
+      <section class="file__section" aria-labelledby="sec-2">
+        <h2 id="sec-2" class="file__heading"><span class="file__numeral">II.</span> Loan request</h2>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="loan_intent">Purpose</label>
+            <select id="loan_intent" name="loan_intent" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="PERSONAL">Personal</option>
+              <option value="EDUCATION">Education</option>
+              <option value="MEDICAL">Medical</option>
+              <option value="VENTURE">Venture</option>
+              <option value="HOMEIMPROVEMENT">Home improvement</option>
+              <option value="DEBTCONSOLIDATION">Debt consolidation</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="loan_grade">Grade</label>
+            <select id="loan_grade" name="loan_grade" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="G">G</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="loan_amnt">Amount requested</label>
+            <div class="field__prefixed">
+              <span class="field__prefix">$</span>
+              <input type="number" id="loan_amnt" name="loan_amnt" min="0" step="100" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="loan_int_rate">Interest rate</label>
+            <div class="field__suffixed">
+              <input type="number" id="loan_int_rate" name="loan_int_rate" min="0" max="40" step="0.01" required />
+              <span class="field__suffix">%</span>
+            </div>
+          </div>
+
+          <div class="field field--computed">
+            <label for="loan_percent_income">Share of income</label>
+            <output id="loan_percent_income" for="person_income loan_amnt">—</output>
+            <p class="field__hint">Calculated from income and amount</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="file__section" aria-labelledby="sec-3">
+        <h2 id="sec-3" class="file__heading"><span class="file__numeral">III.</span> Credit history</h2>
+
+        <div class="field-grid">
+          <div class="field">
+            <label>Prior default on file</label>
+            <div class="pill-toggle" role="radiogroup" aria-label="Prior default on file">
+              <input type="radio" id="default_n" name="cb_person_default_on_file" value="N" required />
+              <label for="default_n">No</label>
+              <input type="radio" id="default_y" name="cb_person_default_on_file" value="Y" />
+              <label for="default_y">Yes</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cb_person_cred_hist_length">Credit history length</label>
+            <div class="field__suffixed">
+              <input type="number" id="cb_person_cred_hist_length" name="cb_person_cred_hist_length" min="0" max="70" step="1" required />
+              <span class="field__suffix">yrs</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="file__submit">
+        <button type="submit" id="submit-btn" class="btn-review">
+          <span class="btn-review__label">Assess risk</span>
+        </button>
+        <p id="form-error" class="file__error" role="alert" hidden></p>
+      </div>
+    </form>
+
+    <section id="result" class="verdict" hidden aria-live="polite">
+      <div class="verdict__stamp-wrap">
+        <div id="stamp" class="stamp">
+          <span id="stamp-text" class="stamp__text">Low risk</span>
+        </div>
+      </div>
+      <div class="verdict__figures">
+        <p class="verdict__prob">
+          <span id="prob-value">0</span><span class="verdict__prob-unit">%</span>
+          <span class="verdict__prob-label">estimated default probability</span>
+        </p>
+        <p class="verdict__threshold">Decision threshold: <span id="threshold-value">—</span>%</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
