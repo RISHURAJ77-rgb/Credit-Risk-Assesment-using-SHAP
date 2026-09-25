@@ -3,6 +3,6 @@
 
 You can try the **Credit Risk Assessment** application here:
 
-👉 **[https://credit-risk-assesment-using-shap-4.onrender.com](YOUR_LIVE_LIN)**
+👉 **[Live Demo](https://credit-risk-assesment-using-shap-4.onrender.com)**
 
 The application provides credit risk assessment along with model predictions and SHAP-based explainability.
